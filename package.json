@@ -1,12 +1,12 @@
 {
   "name": "webpack-demo",
-  "author": "",
+  "author": "Jonathan Stefani <jon@fiftyflowers.com>",
+  "license": "MIT",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
+    "start": "webpack && node server.js",
     "build": "webpack",
     "build:prod": "webpack -p",
     "server": "node server.js"
