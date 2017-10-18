@@ -1,5 +1,6 @@
 import React from 'react'
-import PlanetListContainer from './planetListContainer.jsx'
+import PlanetListContainer from './container-presentation/planetListContainer.jsx'
+import PopupWrapper from './popup-example/popupWrapper.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>I am a react header</h1>
+        <PopupWrapper />
         <PlanetListContainer />
       </div>
     )
