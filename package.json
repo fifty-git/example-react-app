@@ -1,7 +1,7 @@
 {
   "name": "webpack-demo",
   "author": "Jonathan Stefani <jon@fiftyflowers.com>",
-  "license": "MIT",
+  "license": "ISC",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -12,7 +12,6 @@
     "server": "node server.js"
   },
   "keywords": [],
-  "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",

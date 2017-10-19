@@ -2,19 +2,17 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const request = require('request')
-
+const ReactDOMServer = require('react-dom/server')
 const path = require('path')
 
 const app = express()
+
+require('babel-core/register')({
+  presets: ['env', 'react'],
+})
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'))
-
-// serves files bundled by webpack
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'))
-})
-app.use(express.static(path.join(__dirname, '/dist')))
 
 function planetApiCall(planetNum) {
   return new Promise((resolve, reject) => {
@@ -42,6 +40,12 @@ async function getPlanetData(numberOfPlanets) {
   return planetArray
 }
 
+// serves files bundled by webpack
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'))
+})
+app.use(express.static(path.join(__dirname, '/dist')))
+
 app.post('/data', (req, res) => {
   if (req.query.amount) {
     getPlanetData(req.query.amount).then(data => {
@@ -55,6 +59,20 @@ app.post('/data', (req, res) => {
       res.status(200).send(body)
     })
   }
+})
+
+app.post('/renderCode', (req, res) => {
+  let component, renderedHtml
+  if (req.query.component) {
+    component = require(path.resolve(
+      `./src/components/${req.query.component}.jsx`,
+    ))
+  }
+  renderedHtml = {
+    htmlResponse: ReactDOMServer.renderToString(component.default()),
+  }
+
+  res.status(200).send(renderedHtml)
 })
 
 app.listen(8080, () => {
