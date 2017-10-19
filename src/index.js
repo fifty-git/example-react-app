@@ -1,5 +1,13 @@
-import React from 'react'
-import ReactDom from 'react-dom'
-import App from './components/app.jsx'
+import Renderer from './render.jsx'
 
-ReactDom.render(<App />, document.querySelector('#root'))
+Renderer.client()
+
+window
+  .fetch('/renderCode?component=appHydrate', {
+    method: 'POST',
+  })
+  .then(response => response.json())
+  .then(response => {
+    document.querySelector('#serverRoot').innerHTML = response.htmlResponse
+    Renderer.ssr()
+  })
