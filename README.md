@@ -29,3 +29,4 @@ Next navigate to ![localhost:8080](127.0.0.1:8080) to see the finished project.
  - Container and Presentation Components
     - See ![PlanetListContainer](https://github.com/fifty-git/example-react-app/blob/master/src/components/container-presentation/planetListContainer.jsx) to start
  - Popups with brackground overlays and dynamic bodies
+ - An Example of a dynamic component that is rendered on the server
