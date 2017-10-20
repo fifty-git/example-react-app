@@ -3,9 +3,11 @@ import ReactDom from 'react-dom'
 import App from './components/app.jsx'
 import HydrateApp from './components/appHydrate.jsx'
 import SliderHydrate from './components/sliderHydrate.jsx'
+import './components/ssr-components/styles/clock.css'
+import pupper from './pupper.jpg'
 
 const renderClient = () => {
-  ReactDom.render(<App />, document.querySelector('#root'), () =>
+  ReactDom.render(<App image={pupper} />, document.querySelector('#root'), () =>
     console.log('Client Side Rendered'),
   )
 }

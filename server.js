@@ -61,18 +61,23 @@ app.post('/data', (req, res) => {
   }
 })
 
-app.post('/renderCode', (req, res) => {
-  let component, renderedHtml
-  if (req.query.component) {
-    component = require(path.resolve(
-      `./src/components/${req.query.component}.jsx`,
-    ))
-  }
-  renderedHtml = {
-    htmlResponse: ReactDOMServer.renderToString(component.default()),
-  }
+let componentLoader = name => {
+  if (name) return require(path.resolve(`./src/components/${name}.jsx`))
+  else return false
+}
 
-  res.status(200).send(renderedHtml)
+app.post('/renderCode', (req, res) => {
+  let component
+
+  component = componentLoader(req.query.component)
+
+  if (component) {
+    res.status(200).send({
+      htmlResponse: ReactDOMServer.renderToString(component.default()),
+    })
+  } else {
+    res.status(500).send({ errorMessage: "couldn't find requested component" })
+  }
 })
 
 app.listen(8080, () => {
