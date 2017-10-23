@@ -1,4 +1,5 @@
 import Renderer from './render.jsx'
+import Images from './components/slider/images.jsx'
 
 Renderer.client()
 
@@ -15,6 +16,7 @@ window
 window
   .fetch('/renderCode?component=sliderHydrate', {
     method: 'POST',
+    body: Images,
   })
   .then(response => response.json())
   .then(response => {

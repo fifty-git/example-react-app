@@ -5,6 +5,8 @@ import HydrateApp from './components/appHydrate.jsx'
 import SliderHydrate from './components/sliderHydrate.jsx'
 import './components/ssr-components/styles/clock.css'
 import pupper from './pupper.jpg'
+import './components/slider/slider.css'
+import images from './imageData.js'
 
 const renderClient = () => {
   ReactDom.render(<App image={pupper} />, document.querySelector('#root'), () =>
@@ -20,7 +22,7 @@ const renderFirstServer = () => {
 
 const renderSlider = () => {
   ReactDom.hydrate(
-    <SliderHydrate />,
+    <SliderHydrate rImages={images} />,
     document.getElementById('sliderRoot'),
     () => console.log('SSR Slider Hydrate Complete'),
   )

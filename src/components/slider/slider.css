@@ -1,0 +1,39 @@
+/*
+All things slider styles */
+
+.sliderWrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mainSliderFrame {
+  width: 100%;
+  height: 480px;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+
+.buttonFrame {
+  position: relative;
+  top: 245px;
+  width: 800px;
+  z-index: 9999; 
+}
+
+.buttonLeft {
+  position: relative;
+  left: -34px;
+  top: 0px; 
+}
+
+.buttonRight {
+  position: relative;
+  left: 757px;
+  top: 0px; 
+}
+
+.imgStyle {
+  position: relative;
+  display: block;
+  width: auto;
+}
