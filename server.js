@@ -10,8 +10,18 @@ const app = express()
 require('babel-core/register')({
   presets: ['env', 'react'],
 })
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
+
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(morgan('dev'))
 
 function planetApiCall(planetNum) {
@@ -23,7 +33,7 @@ function planetApiCall(planetNum) {
           reject(new Error(err))
         }
         resolve(body)
-      },
+      }
     )
   })
 }
@@ -54,7 +64,7 @@ app.post('/data', (req, res) => {
   } else {
     request('https://swapi.co/api/planets/10/', (err, response, body) => {
       if (err) {
-        res.status(500).send({ status: 'error', message: err })
+        res.status(500).send({status: 'error', message: err})
       }
       res.status(200).send(body)
     })
@@ -70,13 +80,15 @@ app.post('/renderCode', (req, res) => {
   let component
 
   component = componentLoader(req.query.component)
-
+  console.log(req.body)
   if (component) {
     res.status(200).send({
-      htmlResponse: ReactDOMServer.renderToString(component.default()),
+      htmlResponse: ReactDOMServer.renderToString(
+        req.body ? component.default(req.body) : component.default()
+      ),
     })
   } else {
-    res.status(500).send({ errorMessage: "couldn't find requested component" })
+    res.status(500).send({errorMessage: "couldn't find requested component"})
   }
 })
 
