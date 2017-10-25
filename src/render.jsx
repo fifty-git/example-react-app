@@ -20,9 +20,18 @@ const renderFirstServer = () => {
   )
 }
 
+/* NOTE TO FUTURE PERSON:
+
+   Data passing when hydrating a set of components that where rendered server side has
+   to pass data and call the function like it does on the server. So for this situation,
+   when I render SliderHydrate on the server, I call it as a function and pass the
+   props as arguments to the function. To have the data propegate correctly, you need
+   to call it the same way when you hydrate it on the client.
+
+*/
 const renderSlider = () => {
-  ReactDom.render(
-    <SliderHydrate rImages={images} />,
+  ReactDom.hydrate(
+    SliderHydrate(images),
     document.getElementById('sliderRoot'),
     () => console.log('Slider Render Complete')
   )
