@@ -10,21 +10,21 @@ import images from './imageData.js'
 
 const renderClient = () => {
   ReactDom.render(<App image={pupper} />, document.querySelector('#root'), () =>
-    console.log('Client Side Rendered'),
+    console.log('Client Side Rendered')
   )
 }
 
 const renderFirstServer = () => {
   ReactDom.hydrate(<HydrateApp />, document.getElementById('serverRoot'), () =>
-    console.log('SSR Hydrate Complete'),
+    console.log('SSR Hydrate Complete')
   )
 }
 
 const renderSlider = () => {
-  ReactDom.hydrate(
+  ReactDom.render(
     <SliderHydrate rImages={images} />,
     document.getElementById('sliderRoot'),
-    () => console.log('SSR Slider Hydrate Complete'),
+    () => console.log('Slider Render Complete')
   )
 }
 
