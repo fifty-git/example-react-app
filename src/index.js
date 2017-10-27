@@ -12,8 +12,9 @@ window
     document.querySelector('#serverRoot').innerHTML = response.htmlResponse
     Renderer.ssr()
   })
-
-console.log(Images)
+  .catch(err => {
+    throw new Error(err)
+  })
 
 window
   .fetch('/renderCode?component=sliderHydrate', {
@@ -27,4 +28,7 @@ window
   .then(response => {
     document.querySelector('#sliderRoot').innerHTML = response.htmlResponse
     Renderer.sliderSsr()
+  })
+  .catch(err => {
+    throw new Error(err)
   })

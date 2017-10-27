@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const request = require('request')
 const ReactDOMServer = require('react-dom/server')
+const _ = require('lodash')
 const path = require('path')
 
 const app = express()
@@ -81,11 +82,14 @@ app.post('/renderCode', (req, res) => {
 
   component = componentLoader(req.query.component)
   if (component) {
-    res.status(200).send({
+    let response = {
       htmlResponse: ReactDOMServer.renderToString(
-        req.body ? component.default(req.body) : component.default()
+        req.body || !_.empty(req.body)
+          ? component.default(req.body)
+          : component.default()
       ),
-    })
+    }
+    res.status(200).send(response)
   } else {
     res.status(500).send({ errorMessage: "couldn't find requested component" })
   }
