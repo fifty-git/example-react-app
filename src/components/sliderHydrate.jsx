@@ -5,7 +5,7 @@ function SliderHydrate(props) {
   return (
     <div className="SliderMade">
       <h1>Slider Made</h1>
-      <SliderApp hImages={props} />
+      <SliderApp images={props} />
     </div>
   )
 }
