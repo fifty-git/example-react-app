@@ -5,8 +5,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "watch": "webpack --watch",
-    "start": "webpack && node server.js",
+    "watch": "webpack --config webpack.dev.js --watch",
+    "start": "webpack --config webpack.dev.js && node server.js",
+    "start:prod": "webpack --env.production --config webpack.prod.js",
     "build": "webpack --config webpack.dev.js",
     "build:prod": "webpack --env.production --config webpack.prod.js",
     "server": "node server.js"
