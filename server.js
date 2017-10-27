@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
 })
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
 function planetApiCall(planetNum) {
@@ -52,7 +52,7 @@ async function getPlanetData(numberOfPlanets) {
 
 // serves files bundled by webpack
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'))
+  res.sendFile(path.join(__dirname, './index.html'))
 })
 app.use(express.static(path.join(__dirname, '/dist')))
 
@@ -64,7 +64,7 @@ app.post('/data', (req, res) => {
   } else {
     request('https://swapi.co/api/planets/10/', (err, response, body) => {
       if (err) {
-        res.status(500).send({status: 'error', message: err})
+        res.status(500).send({ status: 'error', message: err })
       }
       res.status(200).send(body)
     })
@@ -80,7 +80,6 @@ app.post('/renderCode', (req, res) => {
   let component
 
   component = componentLoader(req.query.component)
-  console.log(req.body)
   if (component) {
     res.status(200).send({
       htmlResponse: ReactDOMServer.renderToString(
@@ -88,7 +87,7 @@ app.post('/renderCode', (req, res) => {
       ),
     })
   } else {
-    res.status(500).send({errorMessage: "couldn't find requested component"})
+    res.status(500).send({ errorMessage: "couldn't find requested component" })
   }
 })
 

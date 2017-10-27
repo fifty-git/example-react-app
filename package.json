@@ -7,8 +7,8 @@
   "scripts": {
     "watch": "webpack --watch",
     "start": "webpack && node server.js",
-    "build": "webpack",
-    "build:prod": "webpack -p",
+    "build": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --env.production --config webpack.prod.js",
     "server": "node server.js"
   },
   "keywords": [],
@@ -41,9 +41,15 @@
     "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.10",
     "css-loader": "^0.28.7",
     "image-webpack-loader": "^3.4.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "webpack-merge": "^4.1.0"
   }
 }
