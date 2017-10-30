@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: './src/js/index.js',
   },
   devtool: 'inline-source-map',
   devServer: {

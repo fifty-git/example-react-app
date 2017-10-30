@@ -1,11 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const request = require('request')
-const ReactDOMServer = require('react-dom/server')
-const _ = require('lodash')
+
+// node libraries
 const path = require('path')
 
+const Routes = require('./server/routes.js')
+const ReactSsr = require('./server/reactRender.js')
 const app = express()
 
 require('babel-core/register')({
@@ -25,75 +26,27 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-function planetApiCall(planetNum) {
-  return new Promise((resolve, reject) => {
-    request(
-      `https://swapi.co/api/planets/${planetNum}/`,
-      (err, response, body) => {
-        if (err) {
-          reject(new Error(err))
-        }
-        resolve(body)
-      }
-    )
-  })
-}
+/*
 
-async function getPlanetData(numberOfPlanets) {
-  let planetArray = []
-  for (let i = 0; i < numberOfPlanets; i++) {
-    try {
-      planetArray.push(await planetApiCall(i))
-    } catch (err) {
-      return err
-    }
-  }
-  return planetArray
-}
+  SSR initial page load render algorithm
+  1) Load in index.html template
+  2) Render React components
+  3) Fill template
+  4) Send to the client
 
-// serves files bundled by webpack
+ */
+app.set('view engine', 'pug')
+app.set('views', `${__dirname}/src/views`)
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'))
+  res.render('index', {
+    pageTitle: 'doggo template',
+    app: ReactSsr.render('app'),
+  })
 })
 app.use(express.static(path.join(__dirname, '/dist')))
 
-app.post('/data', (req, res) => {
-  if (req.query.amount) {
-    getPlanetData(req.query.amount).then(data => {
-      res.status(200).send(data)
-    })
-  } else {
-    request('https://swapi.co/api/planets/10/', (err, response, body) => {
-      if (err) {
-        res.status(500).send({ status: 'error', message: err })
-      }
-      res.status(200).send(body)
-    })
-  }
-})
-
-let componentLoader = name => {
-  if (name) return require(path.resolve(`./src/components/${name}.jsx`))
-  else return false
-}
-
-app.post('/renderCode', (req, res) => {
-  let component
-
-  component = componentLoader(req.query.component)
-  if (component) {
-    let response = {
-      htmlResponse: ReactDOMServer.renderToString(
-        req.body || !_.empty(req.body)
-          ? component.default(req.body)
-          : component.default()
-      ),
-    }
-    res.status(200).send(response)
-  } else {
-    res.status(500).send({ errorMessage: "couldn't find requested component" })
-  }
-})
+app.post('/data', () => Routes.StarWarsData(app))
 
 app.listen(8080, () => {
   // eslint-disable-next-line

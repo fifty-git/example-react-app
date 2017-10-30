@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "watch": "webpack --config webpack.dev.js --watch",
+    "watch": "webpack --watch --config ./webpack.dev.js",
     "start": "webpack --config webpack.dev.js && node server.js",
     "start:prod": "webpack --env.production --config webpack.prod.js",
     "build": "webpack --config webpack.dev.js",
@@ -48,8 +48,12 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.10",
     "css-loader": "^0.28.7",
     "image-webpack-loader": "^3.4.2",
+    "mustache": "^2.3.0",
+    "mustache-express": "^1.2.5",
+    "pug": "^2.0.0-rc.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "stache": "^0.1.0",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "webpack-merge": "^4.1.0"
   }

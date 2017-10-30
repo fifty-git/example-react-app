@@ -6,7 +6,7 @@ class PlanetListContainer extends React.Component {
     super(props)
     this.endpoint = '/data'
     this.planetListLength = '5'
-    this.state = { planets: [] }
+    this.state = { planets: [], error: null }
     this._retreiveData = this._retreiveData.bind(this)
   }
   _retreiveData() {
@@ -16,12 +16,20 @@ class PlanetListContainer extends React.Component {
       })
       .then(response => response.json())
       .then(response => this.setState({ planets: response }))
+      .catch(error => {
+        console.log(error)
+        this.setState({ error: error })
+      })
   }
   componentDidMount() {
     this._retreiveData()
   }
   render() {
-    return <PlanetList planets={this.state.planets} />
+    if (this.state.error) {
+      return <h1>Oh No... The request failed</h1>
+    } else {
+      return <PlanetList planets={this.state.planets} />
+    }
   }
 }
 
