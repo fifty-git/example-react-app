@@ -72,29 +72,37 @@ class SliderApp extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({
-      currentSlide: {
-        image: this._getImage(this._imageKeyArray[0]),
-        key: this._imageKeyArray[0],
-      },
-      activeSlide: 0,
-    })
+    if (this.props.images) {
+      this.setState({
+        currentSlide: {
+          image: this._getImage(this._imageKeyArray[0]),
+          key: this._imageKeyArray[0],
+        },
+        activeSlide: 0,
+      })
+    }
   }
 
   render() {
+    if (!this.props || !this.props.images) {
+      return <h3>Waiting for Images...</h3>
+    }
+
     return (
-      <div className="sliderWrapper">
-        <Buttons
-          nextImageMethod={this.nextImage}
-          previousImageMethod={this.previousImage}
-        />
-        <div className="mainSliderFrame">
-          <Image sliderImage={this.state.currentSlide.image} />
+      <div className="sliderContainer">
+        <div className="sliderWrapper">
+          <Buttons
+            nextImageMethod={this.nextImage}
+            previousImageMethod={this.previousImage}
+          />
+          <div className="mainSliderFrame">
+            <Image sliderImage={this.state.currentSlide.image} />
+          </div>
+          <SlideIndicators
+            activeSlide={this.state.activeSlide}
+            sliderLength={this._imageKeyArray.length}
+          />
         </div>
-        <SlideIndicators
-          activeSlide={this.state.activeSlide}
-          sliderLength={this._imageKeyArray.length}
-        />
       </div>
     )
   }

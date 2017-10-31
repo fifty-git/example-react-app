@@ -17,7 +17,7 @@ class Clock extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="clockWrapper">
         <h2>Dynamic Clock Rendered on the Server</h2>
         <div className="clock">{this.state.time}</div>
       </div>
